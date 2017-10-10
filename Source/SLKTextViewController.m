@@ -237,6 +237,12 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     [super viewDidLayoutSubviews];
 }
 
+- (void)viewSafeAreaInsetsDidChange
+{
+    [super viewSafeAreaInsetsDidChange];
+    [self slk_updateViewConstraints];
+}
+
 
 #pragma mark - Getters
 
@@ -424,6 +430,10 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
         if (tabBar && !tabBar.hidden && !self.hidesBottomBarWhenPushed) {
             return CGRectGetHeight(tabBar.frame);
         }
+    }
+
+    if (@available(iOS 11.0, *)) {
+        return self.view.safeAreaInsets.bottom;
     }
     
     return 0.0;
